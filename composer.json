@@ -1,5 +1,5 @@
 {
-    "name":             "itsoft/revolut-php",
+    "name":             "itsoft/revolut",
     "description":      "Revolut API in one php-class in one file without any dependencies.",
     "keywords":         ["revolut", "api", "php", "single"],
     "homepage":         "https://github.com/itsoft7/revolut-php/",
