@@ -1,0 +1,17 @@
+{
+    "name":             "itsoft/revolut",
+    "description":      "Revolut API in one php-class in one file without any dependencies.",
+    "keywords":         ["revolut", "api", "php", "single"],
+    "homepage":         "https://github.com/itsoft7/revolut-php/",
+    "license":          "MIT",
+    "authors": [
+        {
+            "name":         "Igor Tarasov",
+            "email":        "igor@itsoft.ru",
+            "homepage":     "https://itsoft.ru",
+            "role":         "Developer"
+        }
+    ],
+	"require": {"php": ">=5.4.0"},
+	"autoload": {"psr-4": {"ITSOFT\Revolut": "src/"}}
+}
