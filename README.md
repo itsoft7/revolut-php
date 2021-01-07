@@ -14,3 +14,11 @@ So we need add and delete accounts to counterparty.
 It can be SMS or ENUM.
 
 Revolut API is very unsafe. 
+
+(Revolut Business API Documentation)[https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api].
+
+## Installation
+
+```bash
+composer require itsoft/revolut
+```
