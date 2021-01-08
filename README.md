@@ -36,7 +36,7 @@ Add publickey.cer content to [Revolut Business API settings page](https://busine
 Save ClientId and Enable API access to your account.
 
 ### Create revolut.cfg.php
-This config saves tokens. For security reasons better not to save them, see next section Secured revolut.cfg.php. 
+This config saves tokens in files. You can save them to database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
 
 ```
 <?php
