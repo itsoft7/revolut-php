@@ -70,7 +70,6 @@ $params = [
 //for debug you can use
 // $params['api_url'] =  'https://sandbox-b2b.revolut.com/api/1.0';
 
-
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
 
@@ -128,3 +127,13 @@ print_r($revolut->getExchangeRate(['from'=>'EUR', 'to'=>'USD']));
 print "<h2>transactions</h2>\n";
 print_r($revolut->transactions());
 ```
+
+### Create payment ans other methods
+
+```
+$revolut->createPayment($params); 
+// for $params see [tutorials-make-a-payment-create-payment](https://developer.revolut.com/docs/manage-accounts/#tutorials-tutorials-make-a-payment-create-payment) and
+// [api-reference createPayment](https://developer.revolut.com/api-reference/business/#operation/createPayment)
+```
+
+For other methods see https://github.com/itsoft7/revolut-php/blob/master/src/Revolut.php
