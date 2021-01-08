@@ -22,3 +22,18 @@ Revolut API is very unsafe.
 ```bash
 composer require itsoft/revolut
 ```
+
+## Usage
+
+```bash
+cd your_secret_keys_dir/revolut
+openssl genrsa -out privatekey.pem 1024
+openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
+more publickey.cer
+```
+
+Add publickey.cer content to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point there your OAuth redirect URI.
+Save ClientId and Enable API access to your account.
+
+
+
