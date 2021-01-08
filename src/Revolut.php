@@ -150,8 +150,6 @@ public function exchangeCodeForAccessToken()
 		$save_access_token($this->access_token, $this->access_token_expires);
 		$save_refresh_token = $this->save_refresh_token;
 		$save_refresh_token($this->refresh_token, $this->refresh_token_expires);
-		header('Location: ' . $this->redirect_uri);
-		exit;
 	}
 	else
 	{
