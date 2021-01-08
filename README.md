@@ -35,5 +35,42 @@ more publickey.cer
 Add publickey.cer content to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point there your OAuth redirect URI.
 Save ClientId and Enable API access to your account.
 
+### Create revolut.cfg.php
+This config saves tokens. For security reasons better not to save them, see next section Secured revolut.cfg.php. 
 
+```
+<?php
+$ROOT_PATH = '/www/your-crm...';
+
+require_once $ROOT_PATH . 'vendor/autoload.php';
+$path2token = $ROOT_PATH . 'token/revolut.txt';
+$path2refresh_token = $ROOT_PATH . 'token/revolut_refresh_token.txt';
+
+
+$a_token = json_decode(file_get_contents($path2token));
+$r_token = json_decode(file_get_contents($path2refresh_token));
+
+$params = [
+	'scope' => 'READ', //WRITE or both
+	'api_url' => 'https://b2b.revolut.com/api/1.0', 
+	'client_id' => 'aaasssss....',
+	'private_key' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
+	'redirect_uri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
+	'auth_url' => 'https://business.revolut.com/app-confirm', 
+	'access_token' => $a_token->access_token,
+	'access_token_expires' => $a_token->expires,
+	'refresh_token' => $r_token->refresh_token,
+	'refresh_token_expires' => $r_token->expires,
+	'save_access_token' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
+	'save_refresh_token' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
+	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+];
+
+
+//for debug you can use
+// $params['api_url'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+
+
+$revolut = new \ITSOFT\Revolut\Revolut($params);
+```
 
