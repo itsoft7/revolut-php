@@ -228,7 +228,7 @@ public function createPayment($params)
 	return $this->api('/pay', 'post', $params);
 }
 
-public function transactions($params)
+public function transactions($params=null)
 {
 	return $this->api('/transactions', 'get', $params);
 }
