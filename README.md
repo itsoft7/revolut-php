@@ -35,7 +35,7 @@ more publickey.cer
 Add publickey.cer content to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point there your OAuth redirect URI.
 Save ClientId and Enable API access to your account.
 
-### Create revolut.cfg.php
+### Create insecured revolut.cfg.php
 This config saves tokens in files. You can save them to database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
 
 ```
@@ -74,3 +74,57 @@ $params = [
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
 
+### Secured revolut.cfg.php
+
+```
+<?php
+$ROOT_PATH = '/www/your-crm...';
+
+require_once $ROOT_PATH . 'vendor/autoload.php';
+$params = [
+	'scope' => 'READ', //WRITE or both
+	'api_url' => 'https://b2b.revolut.com/api/1.0', 
+	'client_id' => 'aaasssss....',
+	'private_key' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
+	'redirect_uri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
+	'auth_url' => 'https://business.revolut.com/app-confirm', 
+	'access_token' => '',
+	'access_token_expires' => '',
+	'refresh_token' => '',
+	'refresh_token_expires' => '',
+	'save_access_token' => function ($access_token, $expires){},
+	'save_refresh_token' => function ($refresh_token, $expires){},
+	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+];
+
+
+//for debug you can use
+// $params['api_url'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+
+
+$revolut = new \ITSOFT\Revolut\Revolut($params);
+```
+
+### Code for OAuth redirect URI (https://your_site.com/redirect_uri/)
+```
+require_once 'revolut.cfg.php';
+
+if(isset($_GET['code']))
+ $revolut->exchangeCodeForAccessToken();
+elseif(!$revolut->access_token)
+ $revolut->authLocation();
+  
+//print_r($revolut);
+print "<pre><h2>accounts</h2>\n";
+print_r($revolut->accounts());
+
+print "<h2>counterparties</h2>\n";
+print_r($revolut->counterparties());
+
+print "<h2>getExchangeRate</h2>\n";
+print_r($revolut->getExchangeRate(['from'=>'USD', 'to'=>'EUR']));
+print_r($revolut->getExchangeRate(['from'=>'EUR', 'to'=>'USD']));
+
+print "<h2>transactions</h2>\n";
+print_r($revolut->transactions());
+```
