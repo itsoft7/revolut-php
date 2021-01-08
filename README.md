@@ -132,8 +132,7 @@ print_r($revolut->transactions());
 
 ```
 $revolut->createPayment($params); 
-// for $params see [tutorials-make-a-payment-create-payment](https://developer.revolut.com/docs/manage-accounts/#tutorials-tutorials-make-a-payment-create-payment) and
-// [api-reference createPayment](https://developer.revolut.com/api-reference/business/#operation/createPayment)
 ```
+For $params see [tutorials-make-a-payment-create-payment](https://developer.revolut.com/docs/manage-accounts/#tutorials-tutorials-make-a-payment-create-payment) and [api-reference createPayment](https://developer.revolut.com/api-reference/business/#operation/createPayment).
 
 For other methods see https://github.com/itsoft7/revolut-php/blob/master/src/Revolut.php
