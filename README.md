@@ -3,9 +3,9 @@ One file. No dependencies for security reasons.
 
 Revolut API has next bugs:
 
-1. scope does not work. When I ask READ I also can WRITE and send payments. It's shame.
+1. Scope does not work. When I ask READ I also can WRITE and send payments. It's shame.
 
-2. No possibility to revoke token. Again it's shame. You can ask for new token and not to save it, but it is crutch.
+2. No possibility to revoke token. Again it's shame. You can ask for new token and not to save it, but it is a crutch.
 
 3. No possibility to add account to counterparty. Delete and create again is bad solution due to old payments linked to old id of counterparty.
 So we need add and delete accounts to counterparty.
