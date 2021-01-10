@@ -154,7 +154,7 @@ public function exchangeCodeForAccessToken()
 	else
 	{
 		error_log(print_r($data, true));
-		exit;
+		$this->authLocation();
 	}
 }
 
