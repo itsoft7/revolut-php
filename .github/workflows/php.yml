@@ -29,6 +29,9 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
+    
+    - name: PHP_CodeSniffer Check with Annotations
+      uses: chekalsky/phpcs-action@v1.2.0
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
