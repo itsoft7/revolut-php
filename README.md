@@ -128,7 +128,7 @@ print "<h2>transactions</h2>\n";
 print_r($revolut->transactions());
 ```
 
-### Create payment ans other methods
+### Create payment and other methods
 
 ```
 $revolut->createPayment($params); 
