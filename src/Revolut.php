@@ -173,7 +173,7 @@ class Revolut
         $url                        = $this->api_url . '/auth/token';
         $params                     = http_build_query($params);
         $headers                    = ['Content-Type: application/x-www-form-urlencoded'];
-        $data                       = $this->curl($url, 'post', $params, $header);
+        $data                       = $this->curl($url, 'post', $params, $headers);
         $data                       = json_decode($data);
         $this->access_token         = $data->access_token;
         $this->access_token_expires = time() + $data->expires_in;
