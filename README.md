@@ -52,23 +52,23 @@ $r_token = json_decode(file_get_contents($path2refresh_token));
 
 $params = [
 	'scope' => 'READ', //WRITE or both
-	'api_url' => 'https://b2b.revolut.com/api/1.0', 
-	'client_id' => 'aaasssss....',
-	'private_key' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
-	'redirect_uri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
+	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
+	'clientId' => 'aaasssss....',
+	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
+	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
 	'auth_url' => 'https://business.revolut.com/app-confirm', 
-	'access_token' => $a_token->access_token,
-	'access_token_expires' => $a_token->expires,
-	'refresh_token' => $r_token->refresh_token,
-	'refresh_token_expires' => $r_token->expires,
-	'save_access_token' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
-	'save_refresh_token' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
-	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+	'accessToken' => $a_token->access_token,
+	'accessTokenExpires' => $a_token->expires,
+	'refreshToken' => $r_token->refresh_token,
+	'refreshTokenExpires' => $r_token->expires,
+	'saveAccessToken' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
+	'saveRefreshToken' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
+	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 //for debug you can use
-// $params['api_url'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
@@ -82,23 +82,23 @@ $ROOT_PATH = '/www/your-crm...';
 require_once $ROOT_PATH . 'vendor/autoload.php';
 $params = [
 	'scope' => 'READ', //WRITE or both
-	'api_url' => 'https://b2b.revolut.com/api/1.0', 
-	'client_id' => 'aaasssss....',
-	'private_key' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
-	'redirect_uri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
+	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
+	'clientId' => 'aaasssss....',
+	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
+	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
 	'auth_url' => 'https://business.revolut.com/app-confirm', 
-	'access_token' => '',
-	'access_token_expires' => '',
-	'refresh_token' => '',
-	'refresh_token_expires' => '',
-	'save_access_token' => function ($access_token, $expires){},
-	'save_refresh_token' => function ($refresh_token, $expires){},
+	'accessToken' => '',
+	'accessTokenExpires' => '',
+	'refreshToken' => '',
+	'refreshTokenExpires' => '',
+	'saveAccessToken' => function ($access_token, $expires){},
+	'saveRefreshToken' => function ($refresh_token, $expires){},
 	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 //for debug you can use
-// $params['api_url'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
 
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
@@ -110,7 +110,7 @@ require_once 'revolut.cfg.php';
 
 if(isset($_GET['code']))
  $revolut->exchangeCodeForAccessToken();
-elseif(!$revolut->access_token)
+elseif(!$revolut->accessToken)
  $revolut->authLocation();
   
 //print_r($revolut);
