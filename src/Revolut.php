@@ -2,7 +2,7 @@
 /**
  * Revolut PHP SDK
  *
- * @author  Igor Tarasov <web@itsoft.ru>
+ * @author  Igor Tarasov <igor@itsoft.ru>
  * @author  Pavel Maslov <pavel.masloff@gmail.com>
  * @license https://github.com/itsoft7/revolut-php/blob/master/LICENSE MIT
  */
