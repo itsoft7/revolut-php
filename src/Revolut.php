@@ -262,7 +262,7 @@ class Revolut
     /**
      * Exchange code for access token
      *
-     * @return string
+     * @return void
      */
     public function exchangeCodeForAccessToken()
     {
@@ -299,7 +299,7 @@ class Revolut
     /**
      * Refresh access token
      *
-     * @return string
+     * @return void
      */
     public function refreshAccessToken()
     {
