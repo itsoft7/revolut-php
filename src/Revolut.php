@@ -68,6 +68,13 @@ class Revolut
     private $apiUrl;
 
     /**
+     * Base URL to enable access to your Revolut account
+     *
+     * @var string
+     */
+    private $authUrl;
+
+    /**
      * Revolut OAuth scope
      *
      * @var string
@@ -244,7 +251,7 @@ class Revolut
             'redirect_uri'  => $this->redirectUri,
             'scope'         => $this->scope,
         ];
-        return 'https://business.revolut.com/app-confirm?'.http_build_query($params);
+        return $this->authUrl.'?'.http_build_query($params);
     }
 
     /**

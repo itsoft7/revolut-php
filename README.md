@@ -67,8 +67,9 @@ $params = [
 ];
 
 
-//for debug you can use
+// for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
@@ -97,8 +98,9 @@ $params = [
 ];
 
 
-//for debug you can use
+// for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
