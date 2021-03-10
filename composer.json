@@ -6,10 +6,10 @@
     "license":          "MIT",
     "authors": [
         {
-            "name":         "Igor Tarasov",
-            "email":        "igor@itsoft.ru",
-            "homepage":     "https://itsoft.ru",
-            "role":         "Developer"
+            "name":     "Igor Tarasov",
+            "email":    "igor@itsoft.ru",
+            "homepage": "https://itsoft.ru",
+            "role":     "Developer"
         }
     ],
 	"require": {
@@ -18,5 +18,7 @@
         "ext-curl": "*",
         "ext-openssl": "*"
     },
-	"autoload": {"psr-4": {"ITSOFT\\Revolut\\": "src/"}}
+	"autoload": {
+        "psr-4": {"ITSOFT\\Revolut\\": "src/"}
+    }
 }
