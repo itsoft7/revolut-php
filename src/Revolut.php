@@ -37,7 +37,7 @@ class Revolut
      *
      * @var string
      */
-    private $accessToken;
+    public $accessToken;
 
     /**
      * Epoch time when access token expires
