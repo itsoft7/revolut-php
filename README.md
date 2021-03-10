@@ -61,6 +61,7 @@ $params = [
 	'refreshTokenExpires' => $r_token->expires,
 	'saveAccessTokenCb' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
 	'saveRefreshTokenCb' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
+	'errorUrl' => "/error.php",
 	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
@@ -89,6 +90,7 @@ $params = [
 	'refreshTokenExpires' => '',
 	'saveAccessTokenCb' => function ($access_token, $expires){},
 	'saveRefreshTokenCb' => function ($refresh_token, $expires){},
+	'errorUrl' => "/error.php",
 	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
@@ -98,6 +100,19 @@ $params = [
 
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
+```
+
+### Code for error.php
+```
+<?php
+
+print "<h1>Error</h1>";
+
+if (isset($_GET['msg'])) {
+    print "<pre>";
+    print_r($_GET['msg']);
+    print "</pre>";
+}
 ```
 
 ### Code for OAuth redirect URI (https://your_site.com/redirect_uri/)
