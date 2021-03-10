@@ -204,7 +204,7 @@ class Revolut
      */
     public function api($relativePath, $method = 'get', $params = [], $extraHeaders = [])
     {
-        if (strlen($this->accessToken) === 0) {
+        if (isset($this->accessToken) === false && strlen($this->accessToken) === 0) {
             error_log("No token available");
             $this->goToLocation($this->errorUrl, "No token found. Go to Developer Settings and Enable API access.");
         } else if (time() > ($this->accessTokenExpires - 30)) {
