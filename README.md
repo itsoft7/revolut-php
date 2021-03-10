@@ -3,7 +3,7 @@ One file. No dependencies for security reasons.
 
 Revolut API has next bugs:
 
-1. Scope does not work. When I ask READ I also can WRITE and send payments. It's shame.
+1. Scope is not supported. When I ask READ I also can WRITE and send payments. It's shame.
 
 2. No possibility to revoke token. Again it's shame. You can ask for new token and not to save it, but it is a crutch.
 
@@ -51,7 +51,6 @@ $a_token = json_decode(file_get_contents($path2token));
 $r_token = json_decode(file_get_contents($path2refresh_token));
 
 $params = [
-	'scope' => 'READ', //WRITE or both
 	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
 	'clientId' => 'aaasssss....',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
@@ -82,7 +81,6 @@ $ROOT_PATH = '/www/your-crm...';
 
 require_once $ROOT_PATH . 'vendor/autoload.php';
 $params = [
-	'scope' => 'READ', //WRITE or both
 	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
 	'clientId' => 'aaasssss....',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),

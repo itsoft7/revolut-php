@@ -75,13 +75,6 @@ class Revolut
     private $authUrl;
 
     /**
-     * Revolut OAuth scope
-     *
-     * @var string
-     */
-    private $scope;
-
-    /**
      * Callback function has input 2 parameters - $access_token and $expires
      *
      * @var callable
@@ -120,7 +113,8 @@ class Revolut
     }
 
     /**
-     * Create JWT token
+     * Generate a client-assertion JWT that you use to exchange your authorization code for access token.
+     * The client-assertion JWT should be signed with your private key.
      *
      * @return string
      */
@@ -198,7 +192,6 @@ class Revolut
         return $response;
     }
 
-
     /**
      * Call Revolut API
      *
@@ -247,9 +240,8 @@ class Revolut
     {
         $params = [
             'client_id'     => $this->clientId,
-            'response_type' => 'code',
             'redirect_uri'  => $this->redirectUri,
-            'scope'         => $this->scope,
+            'response_type' => 'code',
         ];
         return $this->authUrl.'?'.http_build_query($params);
     }
@@ -267,7 +259,7 @@ class Revolut
     }
 
     /**
-     * Exchange code for access token
+     * Exchange authorization code for access token
      *
      * @return void
      */
@@ -304,7 +296,7 @@ class Revolut
     }
 
     /**
-     * Refresh access token
+     * After the access token expires, use the refresh_token to request a new one.
      *
      * @return void
      */
