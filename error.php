@@ -1,2 +1,9 @@
-<h1>Error: no token found or refresh token has expired...</h1>
-<h2>Please, go to your Revolut account and Enable API access to your account.</h2>
+<?php
+
+print "<h1>Error</h1>";
+
+if (isset($_GET['msg'])) {
+    print "<pre>";
+    print_r($_GET['msg']);
+    print "</pre>";
+}

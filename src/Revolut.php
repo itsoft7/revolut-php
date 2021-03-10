@@ -206,7 +206,7 @@ class Revolut
     {
         if (strlen($this->accessToken) === 0) {
             error_log("No token available");
-            $this->goToLocation($this->errorUrl);
+            $this->goToLocation($this->errorUrl, "No token found. Go to Developer Settings and Enable API access.");
         } else if (time() > ($this->accessTokenExpires - 30)) {
             error_log("Token has expired");
             $this->refreshAccessToken();
@@ -215,7 +215,7 @@ class Revolut
         $url = $this->apiUrl.$relativePath;
 
         if ($method === 'get') {
-            if ($params === true) {
+            if (isset($params) === true) {
                 $url .= '?'.http_build_query($params);
             }
         } else {
@@ -237,12 +237,17 @@ class Revolut
      * Go to a location
      *
      * @param $location string URL e.g. http://localhost:8080/hello.php
+     * @param string $error    optional error message
      *
      * @return string
      */
-    public function goToLocation($location)
+    public function goToLocation($location, $error = '')
     {
-        header('Location: '.$location);
+        if (strlen($error) > 0) {
+            header('Location: '.$location."?msg=".$error);
+        } else {
+            header('Location: '.$location);
+        }
         exit;
     }
 
@@ -293,7 +298,7 @@ class Revolut
         error_log("Refreshing access token...");
         if (time() > ($this->refreshTokenExpires - 30)) {
             error_log("Refresh token has expired");
-            $this->goToLocation($this->errorUrl);
+            $this->goToLocation($this->errorUrl, "Refresh token has expired. Go to Developer Settings and Enable API access.");
         }
 
         $params = [
