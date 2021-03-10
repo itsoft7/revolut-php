@@ -12,6 +12,11 @@
             "role":         "Developer"
         }
     ],
-	"require": {"php": ">=5.4.0"},
+	"require": {
+        "php": ">=5.4.0",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-openssl": "*"
+    },
 	"autoload": {"psr-4": {"ITSOFT\\Revolut\\": "src/"}}
 }
