@@ -55,20 +55,18 @@ $params = [
 	'clientId' => 'aaasssss....',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
 	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
-	'auth_url' => 'https://business.revolut.com/app-confirm', 
 	'accessToken' => $a_token->access_token,
 	'accessTokenExpires' => $a_token->expires,
 	'refreshToken' => $r_token->refresh_token,
 	'refreshTokenExpires' => $r_token->expires,
-	'saveAccessToken' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
-	'saveRefreshToken' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
+	'saveAccessTokenCb' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
+	'saveRefreshTokenCb' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
 	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 // for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
-// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
@@ -85,20 +83,18 @@ $params = [
 	'clientId' => 'aaasssss....',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
 	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
-	'auth_url' => 'https://business.revolut.com/app-confirm', 
 	'accessToken' => '',
 	'accessTokenExpires' => '',
 	'refreshToken' => '',
 	'refreshTokenExpires' => '',
-	'saveAccessToken' => function ($access_token, $expires){},
-	'saveRefreshToken' => function ($refresh_token, $expires){},
+	'saveAccessTokenCb' => function ($access_token, $expires){},
+	'saveRefreshTokenCb' => function ($refresh_token, $expires){},
 	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 // for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
-// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
@@ -108,10 +104,7 @@ $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
 require_once 'revolut.cfg.php';
 
-if(isset($_GET['code']))
- $revolut->exchangeCodeForAccessToken();
-elseif(!$revolut->accessToken)
- $revolut->authLocation();
+if(isset($_GET['code'])) $revolut->exchangeCodeForAccessToken();
   
 //print_r($revolut);
 print "<pre><h2>accounts</h2>\n";

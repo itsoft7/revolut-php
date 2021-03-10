@@ -68,25 +68,25 @@ class Revolut
     private $apiUrl;
 
     /**
-     * Base URL to enable access to your Revolut account
+     * In case of an error - redirect to this URL
      *
      * @var string
      */
-    private $authUrl;
+    private $errorUrl = "/error.php";
 
     /**
      * Callback function has input 2 parameters - $access_token and $expires
      *
      * @var callable
      */
-    private $saveAccessToken;
+    private $saveAccessTokenCb;
 
     /**
      * Callback function has input 2 parameters - $access_token and $expires
      *
      * @var callable
      */
-    private $saveRefreshToken;
+    private $saveRefreshTokenCb;
 
     /**
      * Constructor
@@ -128,7 +128,7 @@ class Revolut
             'iss' => parse_url($this->redirectUri, PHP_URL_HOST),
             'sub' => $this->clientId,
             'aud' => 'https://revolut.com',
-            'exp' => (time() + 60 * 60),
+            'exp' => (time() + 40 * 60),
         ];
 
         $segments   = [];
@@ -204,9 +204,11 @@ class Revolut
      */
     public function api($relativePath, $method = 'get', $params = '', $extraHeaders = [])
     {
-        if ($this->accessToken === false) {
-            $this->authLocation();
+        if (strlen($this->accessToken) === 0) {
+            error_log("No token available");
+            $this->goToLocation($this->errorUrl);
         } else if (time() > ($this->accessTokenExpires - 30)) {
+            error_log("Token has expired");
             $this->refreshAccessToken();
         }
 
@@ -232,29 +234,15 @@ class Revolut
     }
 
     /**
-     * Create a confirmation URL
+     * Go to a location
+     *
+     * @param $location string URL e.g. http://localhost:8080/hello.php
      *
      * @return string
      */
-    public function authUri()
+    public function goToLocation($location)
     {
-        $params = [
-            'client_id'     => $this->clientId,
-            'redirect_uri'  => $this->redirectUri,
-            'response_type' => 'code',
-        ];
-        return $this->authUrl.'?'.http_build_query($params);
-    }
-
-    /**
-     * Go to confirmation URL
-     *
-     * @return string
-     */
-    public function authLocation()
-    {
-        $uri = $this->authUri();
-        header('Location: '.$uri);
+        header('Location: '.$location);
         exit;
     }
 
@@ -265,6 +253,7 @@ class Revolut
      */
     public function exchangeCodeForAccessToken()
     {
+        error_log("Exchanging code for access token...");
         $params = [
             'grant_type'            => 'authorization_code',
             'code'                  => $_GET['code'],
@@ -279,19 +268,18 @@ class Revolut
         $data    = $this->curl($url, 'post', $params, $headers);
         $data    = json_decode($data);
 
-        if (strlen($data->access_token) > 0) {
+        if (isset($data->access_token) === true && strlen($data->access_token) > 0) {
             $this->accessToken         = $data->access_token;
             $this->refreshToken        = $data->refresh_token;
             $this->accessTokenExpires  = (time() + $data->expires_in);
             $this->refreshTokenExpires = (time() + 90 * 24 * 60 * 60);
 
-            $saveAccessToken = $this->saveAccessToken;
-            $saveAccessToken($this->accessToken, $this->accessTokenExpires);
-            $saveRefreshToken = $this->saveRefreshToken;
-            $saveRefreshToken($this->refreshToken, $this->refreshTokenExpires);
+            $saveAccessTokenCb = $this->saveAccessTokenCb;
+            $saveAccessTokenCb($this->accessToken, $this->accessTokenExpires);
+            $saveRefreshTokenCb = $this->saveRefreshTokenCb;
+            $saveRefreshTokenCb($this->refreshToken, $this->refreshTokenExpires);
         } else {
             error_log(print_r($data, true));
-            $this->authLocation();
         }
     }
 
@@ -302,8 +290,10 @@ class Revolut
      */
     public function refreshAccessToken()
     {
+        error_log("Refreshing access token...");
         if (time() > ($this->refreshTokenExpires - 30)) {
-            $this->authLocation();
+            error_log("Refresh token has expired");
+            $this->goToLocation($this->errorUrl);
         }
 
         $params = [
@@ -322,8 +312,8 @@ class Revolut
         $this->accessToken        = $data->access_token;
         $this->accessTokenExpires = (time() + $data->expires_in);
 
-        $saveAccessToken = $this->saveAccessToken;
-        $saveAccessToken($this->accessToken, $this->accessTokenExpires);
+        $saveAccessTokenCb = $this->saveAccessTokenCb;
+        $saveAccessTokenCb($this->accessToken, $this->accessTokenExpires);
     }
 
     /**
