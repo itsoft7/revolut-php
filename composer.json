@@ -11,6 +11,12 @@
             "email":    "igor@itsoft.ru",
             "homepage": "https://itsoft.ru",
             "role":     "Developer"
+        },
+        {
+            "name":     "Pavel Maslov",
+            "email":    "pavel.masloff@gmail.com",
+            "homepage": "https://maslick.tech",
+            "role":     "Contributor"
         }
     ],
 	"require": {
