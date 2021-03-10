@@ -10,6 +10,84 @@ namespace ITSOFT\Revolut;
 
 class Revolut
 {
+
+    /**
+     * Redirect url
+     *
+     * @var string
+     */
+    private $redirectUri;
+
+    /**
+     * Revolut client id
+     *
+     * @var string
+     */
+    private $clientId;
+
+    /**
+     * Revolut private key
+     *
+     * @var string
+     */
+    private $privateKey;
+
+    /**
+     * Revolut access token
+     *
+     * @var string
+     */
+    private $accessToken;
+
+    /**
+     * Epoch time when access token expires
+     *
+     * @var numeric
+     */
+    private $accessTokenExpires;
+
+    /**
+     * Revolut refresh token
+     *
+     * @var string
+     */
+    private $refreshToken;
+
+    /**
+     * Epoch time when refresh token expires
+     *
+     * @var string
+     */
+    private $refreshTokenExpires;
+
+    /**
+     * Revolut API base URL (e.g. https://b2b.revolut.com/api/1.0)
+     *
+     * @var string
+     */
+    private $apiUrl;
+
+    /**
+     * Revolut OAuth scope
+     *
+     * @var string
+     */
+    private $scope;
+
+    /**
+     * Callback function has input 2 parameters - $access_token and $expires
+     *
+     * @var callable
+     */
+    private $saveAccessToken;
+
+    /**
+     * Callback function has input 2 parameters - $access_token and $expires
+     *
+     * @var callable
+     */
+    private $saveRefreshToken;
+
     /**
      * Constructor
      *
