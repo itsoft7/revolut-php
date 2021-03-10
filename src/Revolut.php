@@ -511,7 +511,7 @@ class Revolut
     /**
      * Get exchange rate
      *
-     * @param object $params parameters
+     * @param array $params parameters
      *
      * @return mixed
      */
