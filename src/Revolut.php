@@ -197,12 +197,12 @@ class Revolut
      *
      * @param string $relativePath relative path
      * @param string $method       HTTP method
-     * @param string $params       parameters
+     * @param array  $params       parameters
      * @param array  $extraHeaders headers
      *
      * @return string
      */
-    public function api($relativePath, $method = 'get', $params = '', $extraHeaders = [])
+    public function api($relativePath, $method = 'get', $params = [], $extraHeaders = [])
     {
         if (strlen($this->accessToken) === 0) {
             error_log("No token available");
