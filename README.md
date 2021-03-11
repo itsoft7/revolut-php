@@ -1,8 +1,9 @@
 # revolut-php
-One file. No dependencies for security reasons.
+simple PHP library for the [Revolut Business API](https://developer.revolut.com/docs/manage-accounts/#get-started)
 
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
+## Motivation
 Revolut API has the following bugs:
 
 1. Scope is not supported. It's a shame.
@@ -14,8 +15,12 @@ Revolut API is very unsafe.
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
+## Features
+1. One file.
+2. No dependencies for security reasons.
+
 ## Demo app
-You can find a demo app here: https://github.com/maslick/revolutor
+You can find a demo app using this library here: https://github.com/maslick/revolutor
 
 ## Installation
 Add this to your composer.json and run 'composer update':
