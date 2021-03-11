@@ -1,6 +1,8 @@
 # revolut-php
 One file. No dependencies for security reasons.
 
+[![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
+
 Revolut API has next bugs:
 
 1. Scope is not supported. When I ask READ I also can WRITE and send payments. It's shame.
