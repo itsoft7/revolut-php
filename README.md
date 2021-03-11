@@ -3,7 +3,7 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
-## Motivation
+## :bulb: Motivation
 Revolut API has the following bugs:
 
 1. Scope is not supported. It's a shame.
@@ -15,14 +15,14 @@ Revolut API is very unsafe.
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
-## Features
+## :rocket: Features
 1. One file.
 2. No dependencies for security reasons.
 
-## Demo app
+## :lollipop: Demo
 You can find a demo app using this library here: https://github.com/maslick/revolutor
 
-## Installation
+## :white_check_mark: Installation
 Add this to your composer.json and run 'composer update':
 ```bash
 "repositories": [{
@@ -34,7 +34,7 @@ Add this to your composer.json and run 'composer update':
 }
 ```
 
-## Usage
+## :ping_pong: Usage
 
 ```bash
 cd your_secret_keys_dir/revolut
