@@ -6,11 +6,9 @@ One file. No dependencies for security reasons.
 Revolut API has the following bugs:
 
 1. Scope is not supported. It's a shame.
-2. No possibility to revoke the token. Again it's a shame. You can ask for a new token and not to save it, but it is a kludge.
-3. No possibility to add an account to a counterparty. Delete and create again is a bad solution due to old payments linked to the old id of a counterparty.
-So we need to add/delete accounts to/from the counterparty.
-4. It's very bad that when I send payments via API there's no MFA. I need a second independent channel to confirm (sign) payments.
-It can be SMS or ENUM.
+2. No possibility to revoke the token. Again it's a shame. You can ask for a new token and not save it, but it's a kludge.
+3. No possibility to add an account to a counterparty. Delete and create is a bad solution due to old payments linked to the old id of a counterparty. So we need to add/delete accounts to/from the counterparty.
+4. It's very bad there's no MFA when I send payments via API. I need a second independent channel to confirm (sign) payments. It can be SMS or ENUM.
 
 Revolut API is very unsafe. 
 
