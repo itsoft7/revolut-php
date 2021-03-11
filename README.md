@@ -14,6 +14,9 @@ Revolut API is very unsafe.
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
+## Demo app
+You can find a demo app here: https://github.com/maslick/revolutor
+
 ## Installation
 Add this to your composer.json and run 'composer update':
 ```bash
