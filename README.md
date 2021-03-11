@@ -5,7 +5,7 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 
 ## :rocket: Features
 1. One file.
-2. No dependencies for security reasons.
+2. No external dependencies.
 
 ## :bulb: Motivation
 Revolut API has the following bugs:
