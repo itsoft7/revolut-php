@@ -3,6 +3,10 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
+## :rocket: Features
+1. One file.
+2. No dependencies for security reasons.
+
 ## :bulb: Motivation
 Revolut API has the following bugs:
 
@@ -14,10 +18,6 @@ Revolut API has the following bugs:
 Revolut API is very unsafe. 
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
-
-## :rocket: Features
-1. One file.
-2. No dependencies for security reasons.
 
 ## :lollipop: Demo
 You can find a demo app using this library here: https://github.com/maslick/revolutor
