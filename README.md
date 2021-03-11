@@ -3,16 +3,13 @@ One file. No dependencies for security reasons.
 
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
-Revolut API has next bugs:
+Revolut API has the following bugs:
 
-1. Scope is not supported. When I ask READ I also can WRITE and send payments. It's shame.
-
-2. No possibility to revoke token. Again it's shame. You can ask for new token and not to save it, but it is a crutch.
-
-3. No possibility to add account to counterparty. Delete and create again is bad solution due to old payments linked to old id of counterparty.
-So we need add and delete accounts to counterparty.
-
-4. It's really very bad that when I send payment via API no double authentication. I need second independed channel to confirm (sign) payments.
+1. Scope is not supported. It's a shame.
+2. No possibility to revoke the token. Again it's a shame. You can ask for a new token and not to save it, but it is a kludge.
+3. No possibility to add an account to a counterparty. Delete and create again is a bad solution due to old payments linked to the old id of a counterparty.
+So we need to add/delete accounts to/from the counterparty.
+4. It's very bad that when I send payments via API there's no MFA. I need a second independent channel to confirm (sign) payments.
 It can be SMS or ENUM.
 
 Revolut API is very unsafe. 
@@ -20,9 +17,15 @@ Revolut API is very unsafe.
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
 ## Installation
-
+Add this to your composer.json and run 'composer update':
 ```bash
-composer require itsoft/revolut
+"repositories": [{
+  "type": "vcs",
+  "url": "https://github.com/itsoft7/revolut-php.git"
+}],
+"require": {
+  "itsoft/revolut": "dev-master"
+}
 ```
 
 ## Usage
@@ -34,11 +37,11 @@ openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
 more publickey.cer
 ```
 
-Add publickey.cer content to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point there your OAuth redirect URI.
+Add the contents of publickey.cer to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point your OAuth redirect URI.
 Save ClientId and Enable API access to your account.
 
 ### Create insecured revolut.cfg.php
-This config saves tokens in files. You can save them to database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
+This config saves tokens in files. You can save them to a database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
 
 ```
 <?php
