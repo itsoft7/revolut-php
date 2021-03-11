@@ -4,8 +4,8 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
 ## :rocket: Features
-1. One file.
-2. No external dependencies.
+* One file.
+* No external dependencies.
 
 ## :bulb: Motivation
 Revolut API has the following bugs:
@@ -34,7 +34,7 @@ Add this to your composer.json and run 'composer update':
 }
 ```
 
-## :ping_pong: Usage
+## :8ball: Usage
 
 ```bash
 cd your_secret_keys_dir/revolut
