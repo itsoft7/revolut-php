@@ -1,29 +1,40 @@
 # revolut-php
-One file. No dependencies for security reasons.
+simple PHP library for the [Revolut Business API](https://developer.revolut.com/docs/manage-accounts/#get-started)
 
-Revolut API has next bugs:
+[![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
-1. Scope is not supported. When I ask READ I also can WRITE and send payments. It's shame.
+## :rocket: Features
+* One file.
+* No external dependencies.
 
-2. No possibility to revoke token. Again it's shame. You can ask for new token and not to save it, but it is a crutch.
+## :bulb: Motivation
+Revolut API has the following bugs:
 
-3. No possibility to add account to counterparty. Delete and create again is bad solution due to old payments linked to old id of counterparty.
-So we need add and delete accounts to counterparty.
-
-4. It's really very bad that when I send payment via API no double authentication. I need second independed channel to confirm (sign) payments.
-It can be SMS or ENUM.
+1. Scope is not supported. It's a shame.
+2. No possibility to revoke the token. Again it's a shame. You can ask for a new token and not save it, but it's a kludge.
+3. No possibility to add an account to a counterparty. Delete and create is a bad solution due to old payments linked to the old id of a counterparty. So we need to add/delete accounts to/from the counterparty.
+4. It's very bad there's no MFA when I send payments via API. I need a second independent channel to confirm (sign) payments. It can be SMS or ENUM.
 
 Revolut API is very unsafe. 
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
-## Installation
+## :lollipop: Demo
+You can find a demo app using this library here: https://github.com/maslick/revolutor
 
+## :white_check_mark: Installation
+Add this to your composer.json and run 'composer update':
 ```bash
-composer require itsoft/revolut
+"repositories": [{
+  "type": "vcs",
+  "url": "https://github.com/itsoft7/revolut-php.git"
+}],
+"require": {
+  "itsoft/revolut": "dev-master"
+}
 ```
 
-## Usage
+## :8ball: Usage
 
 ```bash
 cd your_secret_keys_dir/revolut
@@ -32,11 +43,11 @@ openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
 more publickey.cer
 ```
 
-Add publickey.cer content to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point there your OAuth redirect URI.
+Add the contents of publickey.cer to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point your OAuth redirect URI.
 Save ClientId and Enable API access to your account.
 
 ### Create insecured revolut.cfg.php
-This config saves tokens in files. You can save them to database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
+This config saves tokens in files. You can save them to a database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
 
 ```
 <?php
@@ -51,8 +62,9 @@ $a_token = json_decode(file_get_contents($path2token));
 $r_token = json_decode(file_get_contents($path2refresh_token));
 
 $params = [
-	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
-	'clientId' => 'aaasssss....',
+	'apiUrl' => 'https://b2b.revolut.com/api/1.0',
+	'authUrl' => 'https://business.revolut.com/app-confirm', 
+	'clientId' => 'YOUR-CLIENT-ID',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
 	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
 	'accessToken' => $a_token->access_token,
@@ -61,13 +73,13 @@ $params = [
 	'refreshTokenExpires' => $r_token->expires,
 	'saveAccessTokenCb' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
 	'saveRefreshTokenCb' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
-	'errorUrl' => "/error.php",
 	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 // for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
@@ -80,8 +92,9 @@ $ROOT_PATH = '/www/your-crm...';
 
 require_once $ROOT_PATH . 'vendor/autoload.php';
 $params = [
-	'apiUrl' => 'https://b2b.revolut.com/api/1.0', 
-	'clientId' => 'aaasssss....',
+	'apiUrl' => 'https://b2b.revolut.com/api/1.0',
+	'authUrl' => 'https://business.revolut.com/app-confirm',
+	'clientId' => 'YOUR-CLIENT-ID',
 	'privateKey' => file_get_contents('your_secret_keys_dir/revolut/privatekey.pem'),
 	'redirectUri' => 'https://your_site.com/redirect_uri/', //OAuth redirect URI
 	'accessToken' => '',
@@ -90,38 +103,26 @@ $params = [
 	'refreshTokenExpires' => '',
 	'saveAccessTokenCb' => function ($access_token, $expires){},
 	'saveRefreshTokenCb' => function ($refresh_token, $expires){},
-	'errorUrl' => "/error.php",
-	'log_error' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
 // for debug you can use
 // $params['apiUrl'] =  'https://sandbox-b2b.revolut.com/api/1.0';
+// $params['authUrl'] = 'https://sandbox-business.revolut.com/app-confirm';
 
 
 $revolut = new \ITSOFT\Revolut\Revolut($params);
 ```
 
-### Code for error.php
-```
-<?php
-
-print "<h1>Error</h1>";
-
-if (isset($_GET['msg'])) {
-    print "<pre>";
-    print_r($_GET['msg']);
-    print "</pre>";
-}
-```
 
 ### Code for OAuth redirect URI (https://your_site.com/redirect_uri/)
 ```
 require_once 'revolut.cfg.php';
 
 if(isset($_GET['code'])) $revolut->exchangeCodeForAccessToken();
+elseif(!$revolut->accessToken) $revolut->goToConfirmationURL();
   
-//print_r($revolut);
 print "<pre><h2>accounts</h2>\n";
 print_r($revolut->accounts());
 
