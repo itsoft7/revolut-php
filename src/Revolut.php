@@ -68,11 +68,11 @@ class Revolut
     private $apiUrl;
 
     /**
-     * In case of an error - redirect to this URL
+     * Base URL to enable access to your Revolut account
      *
      * @var string
      */
-    private $errorUrl = "/error.php";
+    private $authUrl;
 
     /**
      * Callback function has input 2 parameters - $access_token and $expires
@@ -206,7 +206,7 @@ class Revolut
     {
         if (strlen($this->accessToken) === 0) {
             error_log("No token available");
-            $this->goToLocation($this->errorUrl, "No token found. Go to Developer Settings and Enable API access.");
+            $this->goToConfirmationURL();
         } else if (time() > ($this->accessTokenExpires - 30)) {
             error_log("Token has expired");
             $this->refreshAccessToken();
@@ -234,20 +234,29 @@ class Revolut
     }
 
     /**
-     * Go to a location
-     *
-     * @param $location string URL e.g. http://localhost:8080/hello.php
-     * @param string $error    optional error message
+     * Create a confirmation URL
      *
      * @return string
      */
-    public function goToLocation($location, $error = '')
+    public function authUri()
     {
-        if (strlen($error) > 0) {
-            header('Location: '.$location."?msg=".$error);
-        } else {
-            header('Location: '.$location);
-        }
+        $params = [
+            'client_id'     => $this->clientId,
+            'response_type' => 'code',
+            'redirect_uri'  => $this->redirectUri,
+        ];
+        return $this->authUrl.'?'.http_build_query($params);
+    }
+
+    /**
+     * Go to confirmation URL
+     *
+     * @return string
+     */
+    public function goToConfirmationURL()
+    {
+        $uri = $this->authUri();
+        header('Location: '.$uri);
         exit;
     }
 
@@ -298,7 +307,7 @@ class Revolut
         error_log("Refreshing access token...");
         if (time() > ($this->refreshTokenExpires - 30)) {
             error_log("Refresh token has expired");
-            $this->goToLocation($this->errorUrl, "Refresh token has expired. Go to Developer Settings and Enable API access.");
+            $this->goToConfirmationURL();
         }
 
         $params = [
