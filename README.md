@@ -23,15 +23,8 @@ Revolut API is very unsafe.
 You can find a demo app using this library here: https://github.com/maslick/revolutor
 
 ## :white_check_mark: Installation
-Add this to your composer.json and run 'composer update':
 ```bash
-"repositories": [{
-  "type": "vcs",
-  "url": "https://github.com/itsoft7/revolut-php.git"
-}],
-"require": {
-  "itsoft/revolut": "dev-master"
-}
+composer require itsoft/revolut
 ```
 
 ## :8ball: Usage
