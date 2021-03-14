@@ -4,18 +4,19 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 [![Build](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml/badge.svg)](https://github.com/itsoft7/revolut-php/actions/workflows/php.yml)
 
 ## :rocket: Features
-* One file.
-* No external dependencies.
+* One file
+* No external dependencies
+* Support for older versions of PHP
 
 ## :bulb: Motivation
 Revolut API has the following bugs:
 
-1. Scope is not supported. It's a shame.
-2. No possibility to revoke the token. Again it's a shame. You can ask for a new token and not save it, but it's a kludge.
-3. No possibility to add an account to a counterparty. Delete and create is a bad solution due to old payments linked to the old id of a counterparty. So we need to add/delete accounts to/from the counterparty.
-4. It's very bad there's no MFA when I send payments via API. I need a second independent channel to confirm (sign) payments. It can be SMS or ENUM.
+* Scope is not supported. E.g. you cannot give read-only access to your Revolut application. It's a shame.
+* No possibility to revoke the token. Again it's a shame. You can ask for a new token (refresh token) and not save it, but it's a kludge.
+* No possibility to add a second account (IBAN) to a counterparty. Delete and create is a bad solution due to old payments are linked to the counterparty uuid. We can add several counterparties with different IBANs, and get into a mess while distinguishing between 2 different companies with the same name.
+* It's very bad there's no MFA when sending payments via the API. We need a second independent channel to confirm (sign) payments. It can be SMS or TOTP.
 
-Revolut API is very unsafe. 
+Revolut API is very unsafe.
 
 [Revolut Business API Documentation](https://developer.revolut.com/docs/manage-accounts/#introduction-to-the-business-api).
 
@@ -39,8 +40,8 @@ more publickey.cer
 Add the contents of publickey.cer to [Revolut Business API settings page](https://business.revolut.com/settings/api) and point your OAuth redirect URI.
 Save ClientId and Enable API access to your account.
 
-### Create insecured revolut.cfg.php
-This config saves tokens in files. You can save them to a database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php. 
+### Create insecure revolut.cfg.php
+This config saves tokens in files. You can save them to a database or other places, but for security reasons better not to save them, see the next section Secured revolut.cfg.php.
 
 ```
 <?php
