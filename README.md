@@ -65,9 +65,9 @@ $params = [
 	'accessTokenExpires' => $a_token->expires,
 	'refreshToken' => $r_token->refresh_token,
 	'refreshTokenExpires' => $r_token->expires,
-	'saveAccessTokenCb' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
-	'saveRefreshTokenCb' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
-	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+	'saveAccessTokenCallback' => function ($access_token, $expires) use ($path2token) {file_put_contents($path2token, json_encode(['access_token' => $access_token, 'expires' => $expires]));},
+	'saveRefreshTokenCallback' => function ($refresh_token, $expires) use ($path2refresh_token) {file_put_contents($path2refresh_token, json_encode(['refresh_token' => $refresh_token, 'expires' => $expires]));},
+	'logErrorCallback' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
@@ -95,9 +95,9 @@ $params = [
 	'accessTokenExpires' => '',
 	'refreshToken' => '',
 	'refreshTokenExpires' => '',
-	'saveAccessTokenCb' => function ($access_token, $expires){},
-	'saveRefreshTokenCb' => function ($refresh_token, $expires){},
-	'logError' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
+	'saveAccessTokenCallback' => function ($access_token, $expires){},
+	'saveRefreshTokenCallback' => function ($refresh_token, $expires){},
+	'logErrorCallback' => function ($error){mail('your_email@domin.com', 'Revolut API Error', $error);}
 ];
 
 
