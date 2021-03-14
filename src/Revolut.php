@@ -75,18 +75,28 @@ class Revolut
     private $authUrl;
 
     /**
-     * Callback function has input 2 parameters - $access_token and $expires
+     * Callback function which will be called once the token is received
+     * It has input 2 parameters - $access_token and $expires
      *
      * @var callable
      */
-    private $saveAccessTokenCb;
+    private $saveAccessTokenCallback;
 
     /**
-     * Callback function has input 2 parameters - $access_token and $expires
+     * Callback function which will be called once the refresh token is received
+     * It has input 2 parameters - $refresh_token and $expires
      *
      * @var callable
      */
-    private $saveRefreshTokenCb;
+    private $saveRefreshTokenCallback;
+
+    /**
+     * Callback function which will be called if an error in a curl request occurs
+     * It has one parameter - $error
+     *
+     * @var callable
+     */
+    private $logErrorCallback;
 
     /**
      * Constructor
@@ -180,8 +190,8 @@ class Revolut
         $response = curl_exec($ch);
         if ($response === false) {
             $lastError = curl_error($ch);
-            if (isset($this->logError) === true) {
-                $logError = $this->logError;
+            if (isset($this->logErrorCallback) === true) {
+                $logError = $this->logErrorCallback;
                 $logError($lastError);
             }
 
@@ -288,9 +298,9 @@ class Revolut
             $this->accessTokenExpires  = (time() + $data->expires_in);
             $this->refreshTokenExpires = (time() + 90 * 24 * 60 * 60);
 
-            $saveAccessTokenCb = $this->saveAccessTokenCb;
+            $saveAccessTokenCb = $this->saveAccessTokenCallback;
             $saveAccessTokenCb($this->accessToken, $this->accessTokenExpires);
-            $saveRefreshTokenCb = $this->saveRefreshTokenCb;
+            $saveRefreshTokenCb = $this->saveRefreshTokenCallback;
             $saveRefreshTokenCb($this->refreshToken, $this->refreshTokenExpires);
         } else {
             error_log(print_r($data, true));
@@ -326,7 +336,7 @@ class Revolut
         $this->accessToken        = $data->access_token;
         $this->accessTokenExpires = (time() + $data->expires_in);
 
-        $saveAccessTokenCb = $this->saveAccessTokenCb;
+        $saveAccessTokenCb = $this->saveAccessTokenCallback;
         $saveAccessTokenCb($this->accessToken, $this->accessTokenExpires);
     }
 
