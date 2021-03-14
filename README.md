@@ -11,8 +11,8 @@ simple PHP library for the [Revolut Business API](https://developer.revolut.com/
 ## :bulb: Motivation
 Revolut API has the following bugs:
 
-* Scope is not supported. It's a shame. E.g. you cannot give read-only access to your Revolut application.
-* No possibility to revoke the token. Again it's a shame. You can ask for a new token and not save it, but it's a kludge.
+* Scope is not supported. E.g. you cannot give read-only access to your Revolut application. It's a shame.
+* No possibility to revoke the token. Again it's a shame. You can ask for a new token (refresh token) and not save it, but it's a kludge.
 * No possibility to add a second account (IBAN) to a counterparty. Delete and create is a bad solution due to old payments are linked to the counterparty uuid. We can add several counterparties with different IBANs, and get into a mess while distinguishing between 2 different companies with the same name.
 * It's very bad there's no MFA when sending payments via the API. We need a second independent channel to confirm (sign) payments. It can be SMS or TOTP.
 
